@@ -9,6 +9,8 @@ import (
 	"os/exec"
 )
 
+var Stdin = Reader{bufio.NewReader(os.Stdin)}
+
 func Cbreak(on bool) {
 	var err error
 	var output []byte
@@ -46,10 +48,11 @@ type Reader struct {
 	in *bufio.Reader
 }
 
-func (r *Reader) getch() Char {
+func (r *Reader) Get() Char {
 	char, err := r.in.ReadByte()
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		return LiteralChar{}
 	}
 
 	if char == '\x1b' {
@@ -64,4 +67,14 @@ func (r *Reader) getch() Char {
 		return EscapeChar{sequence: "\x1b" + string(char) + string(char2)}
 	}
 	return LiteralChar{value: char}
+}
+
+func (r *Reader) Getln() []Char {
+	var char Char = LiteralChar{value: ' '}
+	output := []Char{}
+	for !char.Equals("\n") {
+		char = r.Get()
+		output = append(output, char)
+	}
+	return output
 }
