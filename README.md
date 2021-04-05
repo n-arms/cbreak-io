@@ -4,12 +4,11 @@ Simple library to create text based interfaces
 Heavy-duty golang libraries for this purpose exist, but the goal of this one is to give light functionality for purposes where using something heavier would be overkill.
 
 # Contents
-()[#Usage]
-  ()[###Char]
-  ()[###Writer]
-  ()[###Cbreak]
-  ()[###Reader]
-()[#License]
+(Usage)[#Usage]
+  (Char datatype)[###Char]
+  (Writer datatype)[###Writer]
+  (Entering Cbreak mode and the Reader datatype)[###Reader]
+(Licensing)[#License]
 
 # Usage
 This library is simple enough to be explained in the README!
@@ -88,7 +87,7 @@ defer cbrk.Cbreak(false)
 If your code exits without calling cbreak(false), (like during a panic), simply type "stty sane" into your terminal and hit enter. This will revert it back to normal.
 
 ##### Reader
-This type is used to read chars from a buffer. You have access to 1 instance: cbrk.Stdin, which reads from os.Stdin. YOu should call `Cbreak(true)` before using it.
+This type is used to read chars from a buffer. You have access to 1 instance: cbrk.Stdin, which reads from os.Stdin. You should call `Cbreak(true)` before using it.
 
 ##### Get
 This function will block until a char appears in os.Stdin, then return it. Note that chars like `'\x1b'` will continue to block, as Reader.Get blocks until it can construct a valid cbrk.Char.
@@ -102,17 +101,22 @@ cbrk.Stdout.Println(char)
 if char.Equals("n") {
   return
 }
-stdout.Println("guess what, it continued!")
+cbrk.Stdout.Println("guess what, it continued!")
 ```
 
 ##### Getln
 This function will block until it can read an entire line from os.Stdin, then return a []cbrk.Char representing it.
 
 ```go
-cbrek.Cbreak(true)
+cbrk.Cbreak(true)
 defer cbrk.Cbreak(false)
 cbrk.Stdout.Println("What is your password?")
-if cbrk.CharString(cbrk.Stdin.Getln()) == "incorrect" {
+if cbrk.CharString(cbrk.Stdin.Getln()) == "incorrect\n" {
   cbrk.Stdout.Println("thats right!")
+}else{
+  cbrk.Stdout.Println("thats wrong :(")
 }
 ```
+
+# License
+This project is licensed under MIT, see /LICENSE for more information.
