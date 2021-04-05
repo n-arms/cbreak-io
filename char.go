@@ -18,7 +18,7 @@ var (
 	Cyan      = EscapeChar{sequence: "\x1b[1;36m"}
 	Green     = EscapeChar{sequence: "\x1b[0;32m"}
 	Reset     = EscapeChar{sequence: "\x1b[0;0m"}
-  UpLine = EscapeChar{sequence: "\x1b[1A"}
+	UpLine    = EscapeChar{sequence: "\x1b[1A"}
 )
 
 // Any raw terminal input will yield a slice of cbrk.Char
