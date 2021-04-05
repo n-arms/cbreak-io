@@ -80,7 +80,7 @@ func (r *Reader) Get() Char {
 	return LiteralChar{value: char}
 }
 
-// Block until the given reader has a \n in it and return the entire line, including the newline 
+// Block until the given reader has a \n in it and return the entire line, including the newline
 // Using cbrk.Reader.Get
 func (r *Reader) Getln() []Char {
 	var char Char = LiteralChar{value: ' '}

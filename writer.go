@@ -36,7 +36,8 @@ func (w *Writer) Println(elem interface{}) {
 
 // Clear all lines printed by this instance of Writer
 func (w *Writer) Clear() {
-	for i := 0; i < w.lines; i++ {
+
+	for w.lines != 0 {
 		w.Clearln()
 	}
 }
@@ -50,4 +51,5 @@ func (w *Writer) ClearPage() {
 func (w *Writer) Clearln() {
 	fmt.Fprint(w.out, UpLine)
 	fmt.Fprint(w.out, ClearLine)
+  w.lines -= 1
 }
