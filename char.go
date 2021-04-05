@@ -4,6 +4,7 @@ package cbrk
 
 import (
 	"fmt"
+	"strconv"
 )
 
 var (
@@ -25,6 +26,7 @@ var (
 type Char interface {
 	String() string
 	Equals(interface{}) bool
+	Repr() string
 }
 
 // The type used for chars that can be represented in literal form, ie 'a', '-' or ')'
@@ -40,6 +42,10 @@ func (l LiteralChar) Equals(other interface{}) bool {
 	return l.String() == fmt.Sprint(other)
 }
 
+func (l LiteralChar) Repr() string {
+	return strconv.Itoa(int(l.value))
+}
+
 // The type used for chars that cannot be represented in literal form, ie '<Esc>', '\n' or '<CR>'
 // This also includes sequences like '<Left>' and '<Clear>' that are actually printed as an escape sequence of multiple chars
 type EscapeChar struct {
@@ -52,4 +58,22 @@ func (l EscapeChar) String() string {
 
 func (l EscapeChar) Equals(other interface{}) bool {
 	return fmt.Sprint(other) == l.String() || l.sequence == fmt.Sprint(other)
+}
+
+func (l EscapeChar) Repr() string {
+	output := ""
+	for _, i := range []byte(l.sequence) {
+		output += strconv.Itoa(int(i)) + " "
+	}
+	return output
+}
+
+func CharString(chars []Char) string {
+	output := []byte{}
+
+	for _, i := range chars {
+		output = append(output, byte(i.String()[0]))
+	}
+
+	return string(output)
 }
