@@ -4,11 +4,15 @@ Simple library to create text based interfaces
 Heavy-duty golang libraries for this purpose exist, but the goal of this one is to give light functionality for purposes where using something heavier would be overkill.
 
 # Contents
-(Usage)[#Usage]
-  (Char datatype)[###Char]
-  (Writer datatype)[###Writer]
-  (Entering Cbreak mode and the Reader datatype)[###Reader]
-(Licensing)[#License]
+[Usage](#usage)
+
+  [Char datatype](#char)
+  
+  [Writer datatype](#writer)
+  
+  [Entering Cbreak mode and the Reader datatype](#input)
+  
+[Licensing](#license)
 
 # Usage
 This library is simple enough to be explained in the README!
